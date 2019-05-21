@@ -1,0 +1,82 @@
+<include file = "Base/head" />
+</head>
+<!-- css 上穿图片插件-->
+<style type="text/CSS">
+   ._EditProfile_frame{
+
+       padding: 80px 0;
+       margin-top: 100px;
+       min-height: 800px;
+
+   } 
+
+   #my_face{
+    
+        width: 150px;
+        height: 150px;
+
+   }
+
+   ._Profile{
+
+    width: 60%;
+    margin: 0 auto;
+
+   }
+
+   .nav-tabs{
+       margin: 30px 0 50px 0;
+   }
+
+
+</style>
+
+<link href="__PLUGIN__/UploadFace/css/cropper.css" rel="stylesheet">
+<link href="__PLUGIN__/UploadFace/css/sitelogo.css" rel="stylesheet">
+<script src="__PLUGIN__/UploadFace/js/cropper.min.js"></script>
+<script src="__PLUGIN__/UploadFace/js/sitelogo.js"></script>
+<body>
+    <!-- 包含侧栏的导航条 -->
+<include file="Base/navbar" />
+
+<div class="_EditProfile_frame container">
+
+    <div class="_Profile row change_except_password">
+
+        <div class="col-sm-12 col-md-12 col-lg-4">
+                    <div class="avatar-view center-block" title="">
+                        <img src="__FACE__/face.svg" alt="通用的占位符缩略图" id="my_face" has_change = "false" class="img-circle">
+                    </div>
+                    <br>
+        </div>  
+
+        <div class="col-sm-12 col-md-12 col-lg-6 col-lg-offset-2">
+
+                <form role="form">
+                        <div class="form-group">
+                            <label for="nickname">UserName : </label>
+                            <input type="text" readonly class="form-control" id="nickname"  value="{$user.username}">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email : </label>
+                            <input type="text" readonly class="form-control" id="email" value="{$user.email}">
+                        </div>
+                        <div class="form-group">
+                                <label for="email">Phone : </label>
+                                <input type="text" readonly class="form-control" id="email" value="{$user.phone}">
+                        </div>
+                        <div class="form-group">
+                                <label for="email">User Type : </label>
+                                <input type="text" readonly class="form-control" id="type"  value="{$user.type}">
+                        </div>
+                </form>
+        </div>     
+    </div>
+
+</div>
+<include file="Base/foot"/>
+</body>
+<script>        
+    
+</script>
+</html>

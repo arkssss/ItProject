@@ -1,0 +1,120 @@
+<include file="Base/head"/>
+
+</head>
+
+
+<style>
+
+
+._cover{
+    width: 200px;
+    height: 300px;
+}
+
+</style>
+
+<body>
+
+    <include file = "Base/navbar" />
+    <div class="container">
+
+        <h1 class="text-center">Your Booked Events</h1>
+        <hr>
+    <h2 class="text-success">Coming Events</h2>
+    <hr>
+    <div class="row">
+
+        <volist name="coming_event" id="vo">
+
+                <div class="col-lg-3">
+                        <div class="panel panel-success">
+                                <div class="panel-heading">
+                                        <h3 class="text-center panel-title">{$vo.show_name}</h3>
+                                </div>
+                                <div class="panel-body">
+                                        <img class="center-block _cover img-rounded" src="__PHOTO__/{$vo.show_cover}" alt="">
+                                        <p style="margin-top:10px" class="text-center">Event Date: <span class="text-danger">{$vo.show_date}</span></p>
+                                        <p style="margin-top:10px" class="text-center">Ticket Type: <span class="text-danger">{$vo.ticket_type}</span></p>
+                                        <p  style="margin-top:10px" class="text-center">
+                                        <a href="{:U('ViewItem/detail')}?id={$vo.show_id}" class="btn btn-success" role="button">
+                                            Detail
+                                        </a> 
+                                        </p>
+                                </div>
+                        </div>
+                    </div>
+
+
+        </volist>
+
+    
+
+        <!-- <div class="col-lg-3">
+                <div class="panel panel-success">
+                        <div class="panel-heading">
+                                <h3 class="text-center panel-title">江小白“新大陆”</h3>
+                        </div>
+                        <div class="panel-body">
+                                <img class="center-block _cover img-rounded" src="__PHOTO__/1.png" alt="">
+                                <p  style="margin-top:10px" class="text-center">
+                                <a href="{:U('detail')}" class="btn btn-success" role="button">
+                                        查看详情
+                                </a> 
+                                </p>
+                        </div>
+                </div>
+            </div> -->
+    </div>
+
+
+    <h2 class="text-default">Historical Events</h2>
+    <hr>
+    <div class="row">
+
+            <volist name="pass_event" id="vo">
+
+                    <div class="col-lg-3">
+                            <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                            <h3 class="text-center panel-title">{$vo.show_name}</h3>
+                                    </div>
+                                    <div class="panel-body">
+                                            <img class="center-block _cover img-rounded" src="__PHOTO__/{$vo.show_cover}" alt="">
+                                            <p style="margin-top:10px" class="text-center">Event Date : <span class="text-danger">{$vo.show_date}</span></p>
+                                            <p style="margin-top:10px" class="text-center">Ticket Type: <span class="text-danger">{$vo.ticket_type}</span></p>
+                                            <p  style="margin-top:10px" class="text-center">
+                                            <a href="{:U('ViewItem/detail')}?id={$vo.show_id}" class="btn btn-default" role="button">
+                                                    Detail
+                                            </a> 
+                                            </p>
+                                    </div>
+                            </div>
+                        </div>
+            </volist>
+        
+
+                    <!-- <div class="col-lg-3">
+                            <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                            <h3 class="text-center panel-title">江小白“新大陆”</h3>
+                                    </div>
+                                    <div class="panel-body">
+                                            <img class="center-block _cover img-rounded" src="__PHOTO__/1.png" alt="">
+                                            <p  style="margin-top:10px" class="text-center">
+                                            <a href="{:U('detail')}" class="btn btn-default" role="button">
+                                                    查看详情
+                                            </a> 
+                                            </p>
+                                    </div>
+                            </div>
+                        </div> -->
+
+
+    </div>
+
+    </body>
+<script>
+
+</script>
+
+</html>

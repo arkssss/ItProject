@@ -1,0 +1,160 @@
+<include file="Base/head"/>
+
+
+</head>
+<style>
+body{
+    margin-top : 70px !important;
+}
+._main_frame{
+    margin-bottom: 200px;
+}
+</style>
+
+<body>
+
+<include file = "Base/navbar" />
+
+<div class="_main_frame container">
+
+
+
+<div class="row">
+        <div class="row col-sm-8 col-md-8">
+                <div class="thumbnail col-md-5 col-sm-5">
+                    <img src="__PHOTO__{$event.show_cover}"
+                    alt="">
+                </div>
+
+                <div class="caption pull-right col-sm-6 col-md-6 ">
+                        <span id="show_id" style="display:none">{$event.id}</span>
+                        <h3>{$event.show_name}</h3>
+                        <hr>
+                        <h4 class="text-info">Event Information</h4>
+                        <p id="show_date">Event Date : {$event.show_time}</p>
+                        <p>Event Time : {$event.show_times}</p>
+                        <p>Event Location :  {$event.show_place}</p>
+                        <p>Event Tel : {$event.show_tel}</p>
+                        <hr>    
+                        <h4 class="text-info">Tickets Information</h4>
+                        <p class="_price_tags">
+                            <volist name="tickets" id="vo">
+                                <span style="margin-right:10px" class='btn btn-default _ticket' type="{$vo.ticket_name}" role="button">{$vo.ticket_price}</span>
+                            </volist>
+                            <volist name="tickets" id="vo">
+                            <div style="margin-top:10px; display: none" class="panel panel-success _ticket_div" id="{$vo.ticket_name}">
+                                    <div class="panel-heading">
+                                        <h3 class="panel-title">
+                                            {$vo.ticket_name}
+                                        </h3>
+                                    </div>
+                                    <div class="panel-body">
+                                            <p>Remaining Tickets:  {$vo.ticket_number}</p>
+                                            <p>Ticket detail: {$vo.ticket_detail}</p>
+                                    </div>
+                                </div>
+                            </volist>
+
+                        </p>
+                        <hr>    
+                        <h4 class="text-info">Booking Now</h4>
+                        <p>
+                            <span href="#" class="btn btn-success _Booking" role="button">
+                                Booking
+                            </span> 
+                        </p>
+                </div>
+        </div>
+</div>
+
+
+<h3 class="text-info">More Information</h3>
+<hr>    
+<ul id="myTab" class="nav nav-tabs">
+    <li class="active">
+        <a href="#home" data-toggle="tab">Event's Detial</a>
+    </li>
+    <li><a href="#ios" data-toggle="tab">Purchase Description</a></li>
+</ul>
+<div id="myTabContent" class="tab-content">
+    <div class="tab-pane fade in active" id="home">
+        <h3 class="text-danger">Detail</h3>
+        <hr>
+        <p> 
+            {$event.show_detail}
+        </p>
+    </div>
+    <div class="tab-pane fade" id="ios">
+        <h3 class="text-danger">About Purchase</h3>
+        <hr>
+            {$event.show_purchase_des}
+    </div>
+</div>
+
+
+
+
+</div>
+
+<include file = "Base/foot" />
+
+</body>
+
+<script>
+    $(document).ready(function(){
+
+        $("._ticket").click(function(){
+
+            var div_id = $(this).attr("type");
+            
+            $("._ticket").removeClass('btn-success curtTicket');
+            $(this).addClass("btn-success curtTicket");
+
+            $("._ticket_div").css("display","none");
+            $("#"+div_id+"").css("display","block");
+
+        })
+
+        // booking 
+        $("._Booking").click(function(){
+            $(this).attr('disabled','disabled')
+            var curtTicket = $(".curtTicket").text();
+            if(!curtTicket) {
+                alert("Please select a type of ticket first")
+                $("._Booking").removeAttr('disabled')
+                return;
+            }
+            var show_id = $("#show_id").text();
+
+            var theurl = "{:U('ViewItem/booking')}"
+            $.post(
+                theurl,
+                {
+                    'show_id' : show_id,
+                    'ticket'  : curtTicket,
+                },
+                function(res){
+                    res = JSON.parse(res)
+                    if(res.error){
+                        // success
+                        layer.alert(res.msg, {skin: 'layui-layer-lan', title :'UOW BOOKING'},
+                        function(){
+                                //关闭登陆model
+                                location.reload();
+                            }
+                        );
+                    }else{
+                        // error
+                        layer.alert(res.msg, {skin: 'layui-layer-lan', title :'UOW BOOKING'})
+                    }
+                    $("._Booking").removeAttr('disabled')
+                }
+            )
+        })
+
+    })
+</script>
+
+
+
+</html>

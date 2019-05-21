@@ -1,0 +1,78 @@
+<include file="Base/head"/>
+
+</head>
+
+
+<style>
+body{
+    margin-top:100px !important;
+}
+._item{
+    height: 500px;
+}
+
+._cover{
+    width: 200px;
+    height: 300px;
+}
+
+</style>
+
+<body>
+
+    <include file = "Base/navbar" />
+    <div class="container" style="margin-bottom:100px">
+
+        <h1 class="text-center">Your Publication</h1>
+    <hr>
+    <div class="row">
+
+        <volist name="events" id="vo">
+
+                <div class="_item col-lg-3">
+                        <div class="panel panel-success">
+                                <div class="panel-heading">
+                                        <h3 class="text-center panel-title">{$vo.show_name}</h3>
+                                </div>
+                                <div class="panel-body">
+                                        <img class="center-block _cover img-rounded" src="__PHOTO__/{$vo.show_cover}" alt="">
+                                        <!-- <p style="margin-top:10px" class="text-center">Publish Date: <span class="text-danger">{$vo.show-}</span></p> -->
+                                        <p style="margin-top:10px" class="text-center">Event Date: <span class="text-danger">{$vo.show_time}</span></p>
+                                        <p  style="margin-top:10px" class="text-center">
+                                        <a href="{:U('ViewItem/detail')}?id={$vo.id}" class="pull-left btn btn-success" role="button">
+                                            Detail
+                                        </a> 
+                                        <a href="{:U('ViewItem/detail')}?id={$vo.id}" class="pull-rigtt btn btn-danger" role="button">
+                                            Delete
+                                        </a> 
+                                        </p>
+                                </div>
+                        </div>
+                    </div>
+
+
+        </volist>
+
+    
+
+        <!-- <div class="col-lg-3">
+                <div class="panel panel-success">
+                        <div class="panel-heading">
+                                <h3 class="text-center panel-title">江小白“新大陆”</h3>
+                        </div>
+                        <div class="panel-body">
+                                <img class="center-block _cover img-rounded" src="__PHOTO__/1.png" alt="">
+                                <p  style="margin-top:10px" class="text-center">
+                                <a href="{:U('detail')}" class="btn btn-success" role="button">
+                                        查看详情
+                                </a> 
+                                </p>
+                        </div>
+                </div>
+            </div> -->
+    </div>
+    </div>
+
+    <include file="Base/foot"/>
+    </body>
+</html>
