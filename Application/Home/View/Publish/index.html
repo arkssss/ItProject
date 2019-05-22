@@ -289,8 +289,12 @@
                 'show_lowest_price' : lowest_price,
             }
 
-
+           
             // validate code if have time
+            if(!data['show_name'] || !data['show_time'] || !data['show_times'] || !data['show_place'] || !data['show_tel'] || !data['show_cover'] || !data['show_detail'] || !data['show_purchase_des']){
+                alert("Please Fill All The Infomation!")
+                return;
+            }
 
             var theurl = "{:U('Publish/index')}"
             $.post(
@@ -301,6 +305,7 @@
                     // console.log(res)
                     if(!res.error){
                         // success
+                        location.href = "{:U('VeiwItem/index')}"
                     }
                     alert(res.msg);
                     

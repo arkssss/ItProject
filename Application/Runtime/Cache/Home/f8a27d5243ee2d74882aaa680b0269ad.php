@@ -66,6 +66,17 @@ body{
     padding: 0 200px; 
 }
 
+@media screen and (max-width: 600px){
+
+.navbar{
+    padding: 0;
+}
+
+.search{
+    display: none;
+}
+}
+
 .nav{
     width: 80%;
 }
@@ -154,10 +165,8 @@ body{
 
                 <div class="search d7">
                         <form>
-                            <!-- <div> -->
                                 <input id="key_word" type="text" placeholder="Search Your Event...">
                                 <span id="_Search"></span>
-                            <!-- </div> -->
                         </form>
                         </div>
                 </div>

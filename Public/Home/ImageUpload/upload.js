@@ -58,8 +58,8 @@ DragImgUpload.prototype = {
         var img = window.URL.createObjectURL(fileList[0]);
         var filename = fileList[0].name; //图片名称
         var filesize = Math.floor((fileList[0].size)/1024);
-        if(filesize>500){
-            alert("上传大小不能超过500K.");
+        if(filesize>1000000){
+            alert("上传大小不能超过1000000K.");
             return false;
         }
 
