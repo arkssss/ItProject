@@ -24,13 +24,72 @@ body{
     <div class="container" style="margin-bottom:100px">
 
         <h1 class="text-center">Your Publication</h1>
-    <hr>
-    <div class="row">
+        <hr>
+        <h2 class="text-success">Approved</h2>
+        <hr>
+        <div class="row">
 
-        <volist name="events" id="vo">
+                <volist name="events_App" id="vo">
 
-                <div class="_item col-lg-3">
-                        <div class="panel panel-success">
+                        <div class="_item col-lg-4">
+                                <div class="panel panel-success">
+                                        <div class="panel-heading">
+                                                <h3 class="text-center panel-title">{$vo.show_name}</h3>
+                                        </div>
+                                        <div class="panel-body">
+                                                <img class="center-block _cover img-rounded" src="__PHOTO__/{$vo.show_cover}" alt="">
+                                                <!-- <p style="margin-top:10px" class="text-center">Publish Date: <span class="text-danger">{$vo.show-}</span></p> -->
+                                                <p style="margin-top:10px" class="text-center">Event Date: <span class="text-danger">{$vo.show_time}</span></p>
+                                                <p  style="margin-top:10px" class="text-center">
+                                                <a href="{:U('ViewItem/detail')}?id={$vo.id}" class="text-center btn btn-success" role="button">
+                                                Detail
+                                                </a> 
+                                                </p>
+                                        </div>
+                                </div>
+                        </div>
+
+
+                </volist>
+
+        </div>
+
+    
+         <h2 class="text-primary">Under Reviewing</h2>
+         <hr>
+         <div class="row">
+
+        <volist name="events_Und" id="vo">
+
+                <div class="_item col-lg-4">
+                        <div class="panel panel-primary">
+                                <div class="panel-heading">
+                                        <h3 class="text-center panel-title">{$vo.show_name}</h3>
+                                </div>
+                                <div class="panel-body">
+                                        <img class="center-block _cover img-rounded" src="__PHOTO__/{$vo.show_cover}" alt="">
+                                        <!-- <p style="margin-top:10px" class="text-center">Publish Date: <span class="text-danger">{$vo.show-}</span></p> -->
+                                        <p style="margin-top:10px" class="text-center">Event Date: <span class="text-danger">{$vo.show_time}</span></p>
+                                </div>
+                        </div>
+                        </div>
+
+
+        </volist>
+        </div>
+
+
+
+
+
+        <h2>Not Approved</h2>
+        <hr>
+        <div class="row">
+
+        <volist name="events_NotApp" id="vo">
+
+                <div class="_item col-lg-4">
+                        <div class="panel panel-default">
                                 <div class="panel-heading">
                                         <h3 class="text-center panel-title">{$vo.show_name}</h3>
                                 </div>
@@ -39,12 +98,6 @@ body{
                                         <!-- <p style="margin-top:10px" class="text-center">Publish Date: <span class="text-danger">{$vo.show-}</span></p> -->
                                         <p style="margin-top:10px" class="text-center">Event Date: <span class="text-danger">{$vo.show_time}</span></p>
                                         <p  style="margin-top:10px" class="text-center">
-                                        <a href="{:U('ViewItem/detail')}?id={$vo.id}" class="pull-left btn btn-success" role="button">
-                                            Detail
-                                        </a> 
-                                        <a href="{:U('ViewItem/detail')}?id={$vo.id}" class="pull-rigtt btn btn-danger" role="button">
-                                            Delete
-                                        </a> 
                                         </p>
                                 </div>
                         </div>
@@ -52,8 +105,10 @@ body{
 
 
         </volist>
+        </div>
 
-    
+
+
 
         <!-- <div class="col-lg-3">
                 <div class="panel panel-success">
@@ -70,7 +125,7 @@ body{
                         </div>
                 </div>
             </div> -->
-    </div>
+
     </div>
 
     <include file="Base/foot"/>

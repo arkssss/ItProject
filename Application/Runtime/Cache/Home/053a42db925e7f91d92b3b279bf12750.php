@@ -234,8 +234,18 @@
                         <label for="lastname" class="control-label">Emial: </label>
                         <input name='emial' type="text" class="form-control" id="lastname" required="required">
                 </div>
+
                 <div class="form-group">
-                          <button type="submit" class="center-block btn btn-default">Submit</button>
+                        <label for="name">User Type (Just for test so you type choose your type here)</label>
+                        <select name='type' class="form-control">
+                                <option value="1">Normal User</option>
+                                <option value="2">Events Publisher</option>
+                                <option value="3"> Super User</option>
+                        </select>
+                </div>
+
+                <div class="form-group">
+                        <button type="submit" class="center-block btn btn-default">Submit</button>
                 </div>
                 </form>
 

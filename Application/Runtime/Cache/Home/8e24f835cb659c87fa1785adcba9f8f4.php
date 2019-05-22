@@ -283,7 +283,7 @@
 
 <div class="_foot">
     <div class="row">
-        <p class="col-xs-12 col-lg-12 col-sm-12 text-center">CopyRight 2019 - 2119 ©</p>
+        <p class="col-xs-12 col-lg-12 col-sm-12 text-center">CopyRight 2019 ©</p>
         <p class="text-info col-xs-12 col-lg-12 col-sm-12 text-center">ZhouFang & James & Sachin & Xiang</p>
     </div>
 </div>

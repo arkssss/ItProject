@@ -31,7 +31,9 @@ class ViewItemController extends Controller {
     public function get_all_event(){
 
         // get all the event
-        $events = M($this->show_modle)->select();
+        $map['show_status'] = 1;
+        $events = M($this->show_modle)->where($map)->select();
+
         echo  json_encode($events);
     }
 
@@ -130,7 +132,7 @@ class ViewItemController extends Controller {
         $user_id = intval(I("cookie.id"), 0);
         if(!$user_id) $this->error("Invaild User");
 
-        // select
+        // select Event_available
         $all_records = M($this->show_book_record) -> where(['user_id'=>$user_id]) -> select();
 
         // prcess
@@ -138,13 +140,22 @@ class ViewItemController extends Controller {
         $pass_event = [];
         $curtDate = date("Y-m-d",time());
         foreach ($all_records as $key => $value) {
-            $show_date = $value['show_date'];
-            if($show_date < $curtDate){
-                //pass event
-                array_push($pass_event, $value);
-            }else{
-                array_push($coming_event, $value);
+
+            $the_show['id'] = $value['show_id'];
+
+            if(M($this->show_modle)->where($the_show)->getField('show_status') == '1'){
+                // available event 
+
+                $show_date = $value['show_date'];
+                if($show_date < $curtDate){
+                    //pass event
+                    array_push($pass_event, $value);
+                }else{
+                    array_push($coming_event, $value);
+                }
+
             }
+
         }
 
         $this->assign('pass_event', $pass_event);
@@ -167,23 +178,32 @@ class ViewItemController extends Controller {
         $all_records = M($this->show_modle) -> where(['show_owner'=>$user_id]) -> select();
 
         // // prcess
-        // $coming_event = [];
-        // $pass_event = [];
-        // $curtDate = date("Y-m-d",time());
-        // foreach ($all_records as $key => $value) {
-        //     $show_date = $value['show_date'];
-        //     if($show_date < $curtDate){
-        //         //pass event
-        //         array_push($pass_event, $value);
-        //     }else{
-        //         array_push($coming_event, $value);
-        //     }
-        // }
+        $events_App = [];
+        $events_Und = [];
+        $events_NotApp = [];
 
-        // $this->assign('pass_event', $pass_event);
-        // $this->assign('coming_event', $coming_event);
-        $this->assign('events', $all_records);
 
+        foreach ($all_records as $key => $value) {
+
+            switch($value['show_status']){
+                case '0' :
+                     array_push($events_Und, $value);
+                     break;
+                case '1' :
+                     array_push($events_App, $value);
+                     break;
+                case '2' :
+                     array_push($events_NotApp, $value);
+                    break;
+                default :
+                    array_push($events_Und, $value);
+                    break;
+            }
+        }
+
+        $this->assign('events_App', $events_App);
+        $this->assign('events_Und', $events_Und);
+        $this->assign('events_NotApp', $events_NotApp);
         $this->display();
     }
 

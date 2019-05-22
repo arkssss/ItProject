@@ -209,11 +209,60 @@ body{
     <div class="container" style="margin-bottom:100px">
 
         <h1 class="text-center">Your Publication</h1>
-    <hr>
-    <div class="row">
+        <hr>
+        <h2 class="text-success">Approved</h2>
+        <hr>
+        <div class="row">
 
-        <?php if(is_array($events)): $i = 0; $__LIST__ = $events;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?><div class="_item col-lg-3">
-                        <div class="panel panel-success">
+                <?php if(is_array($events_App)): $i = 0; $__LIST__ = $events_App;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?><div class="_item col-lg-4">
+                                <div class="panel panel-success">
+                                        <div class="panel-heading">
+                                                <h3 class="text-center panel-title"><?php echo ($vo["show_name"]); ?></h3>
+                                        </div>
+                                        <div class="panel-body">
+                                                <img class="center-block _cover img-rounded" src="/SoaProject/Public/photo/<?php echo ($vo["show_cover"]); ?>" alt="">
+                                                <!-- <p style="margin-top:10px" class="text-center">Publish Date: <span class="text-danger"><?php echo ($vo["show-"]); ?></span></p> -->
+                                                <p style="margin-top:10px" class="text-center">Event Date: <span class="text-danger"><?php echo ($vo["show_time"]); ?></span></p>
+                                                <p  style="margin-top:10px" class="text-center">
+                                                <a href="<?php echo U('ViewItem/detail');?>?id=<?php echo ($vo["id"]); ?>" class="text-center btn btn-success" role="button">
+                                                Detail
+                                                </a> 
+                                                </p>
+                                        </div>
+                                </div>
+                        </div><?php endforeach; endif; else: echo "" ;endif; ?>
+
+        </div>
+
+    
+         <h2 class="text-primary">Under Reviewing</h2>
+         <hr>
+         <div class="row">
+
+        <?php if(is_array($events_Und)): $i = 0; $__LIST__ = $events_Und;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?><div class="_item col-lg-4">
+                        <div class="panel panel-primary">
+                                <div class="panel-heading">
+                                        <h3 class="text-center panel-title"><?php echo ($vo["show_name"]); ?></h3>
+                                </div>
+                                <div class="panel-body">
+                                        <img class="center-block _cover img-rounded" src="/SoaProject/Public/photo/<?php echo ($vo["show_cover"]); ?>" alt="">
+                                        <!-- <p style="margin-top:10px" class="text-center">Publish Date: <span class="text-danger"><?php echo ($vo["show-"]); ?></span></p> -->
+                                        <p style="margin-top:10px" class="text-center">Event Date: <span class="text-danger"><?php echo ($vo["show_time"]); ?></span></p>
+                                </div>
+                        </div>
+                        </div><?php endforeach; endif; else: echo "" ;endif; ?>
+        </div>
+
+
+
+
+
+        <h2>Not Approved</h2>
+        <hr>
+        <div class="row">
+
+        <?php if(is_array($events_NotApp)): $i = 0; $__LIST__ = $events_NotApp;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?><div class="_item col-lg-4">
+                        <div class="panel panel-default">
                                 <div class="panel-heading">
                                         <h3 class="text-center panel-title"><?php echo ($vo["show_name"]); ?></h3>
                                 </div>
@@ -222,18 +271,14 @@ body{
                                         <!-- <p style="margin-top:10px" class="text-center">Publish Date: <span class="text-danger"><?php echo ($vo["show-"]); ?></span></p> -->
                                         <p style="margin-top:10px" class="text-center">Event Date: <span class="text-danger"><?php echo ($vo["show_time"]); ?></span></p>
                                         <p  style="margin-top:10px" class="text-center">
-                                        <a href="<?php echo U('ViewItem/detail');?>?id=<?php echo ($vo["id"]); ?>" class="pull-left btn btn-success" role="button">
-                                            Detail
-                                        </a> 
-                                        <a href="<?php echo U('ViewItem/detail');?>?id=<?php echo ($vo["id"]); ?>" class="pull-right btn btn-danger" role="button">
-                                            Delete
-                                        </a> 
                                         </p>
                                 </div>
                         </div>
                     </div><?php endforeach; endif; else: echo "" ;endif; ?>
+        </div>
 
-    
+
+
 
         <!-- <div class="col-lg-3">
                 <div class="panel panel-success">
@@ -250,7 +295,7 @@ body{
                         </div>
                 </div>
             </div> -->
-    </div>
+
     </div>
 
     <style type="text/css"> 
@@ -277,7 +322,7 @@ body{
 
 <div class="_foot">
     <div class="row">
-        <p class="col-xs-12 col-lg-12 col-sm-12 text-center">CopyRight 2019 - 2119 ©</p>
+        <p class="col-xs-12 col-lg-12 col-sm-12 text-center">CopyRight 2019 ©</p>
         <p class="text-info col-xs-12 col-lg-12 col-sm-12 text-center">ZhouFang & James & Sachin & Xiang</p>
     </div>
 </div>

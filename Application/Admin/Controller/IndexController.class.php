@@ -4,6 +4,7 @@ use Think\Controller;
 class IndexController extends Controller {
 
     protected $user_model = "user";
+    protected $show_model = "show";
 
     public function index(){ 
 
@@ -13,6 +14,8 @@ class IndexController extends Controller {
         if(!$user_id || $user_type!='3'){
             $this->display('LogIn/index');
         }else{
+            $user_info = M($this->user_model)->where(['id'=>$user_id])->find();
+            $this->assign("user", $user_info);
             $this->display(); 
         }
 
@@ -46,6 +49,46 @@ class IndexController extends Controller {
 
         echo json_encode($ret);
         return;
+    }
+
+
+
+    public function event_tabel(){
+
+        $all_events = M($this->show_model)->select();
+
+
+        $this->assign("events", $all_events);
+        $this->display('Index/pages_doc');
+    }
+
+    public function user_tabel(){
+
+        $all_users = M($this->user_model)->select();
+
+        $this->assign("users", $all_users);
+        $this->display('Index/pages_user');
+    }
+
+    public function operate(){
+
+        $id = intval(I('get.id'));
+        $operate = intval(I('get.ope'));
+
+        if(!$id || !$operate) {
+            $this->error("Parameter error!");
+        }
+        $map['id'] = $id;
+        $show_info = M($this->show_model)->where($map)->find();
+
+        if(!$show_info){
+            $this->error("Event Dose Not Exist!");
+        }
+
+        if($show_info['show_status'] != $operate){
+            M($this->show_model)->where($map)->setField('show_status', $operate);
+        }
+        $this->success("Success");
     }
 
 }

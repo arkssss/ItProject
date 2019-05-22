@@ -20,18 +20,6 @@ return array(
 		'__FACE__' => __ROOT__.'/Public/Face',
 	),
 
-
-	// 数据库
-
-		'DB_TYPE'   => 'mysqli', // 数据库类型
-		'DB_HOST'   => '47.106.231.27', // 服务器地址
-		'DB_NAME'   => 'SoaProject', // 数据库名
-		'DB_USER'   => 'root', // 用户名
-		'DB_PWD'    => 'qlk9NSAvNqq6jYEm', // 密码
-		'DB_PORT'   =>  3306, // 端口
-		'DB_PARAMS' =>  array(), // 数据库连接参数
-		'DB_PREFIX' => 'think_', // 数据库表前缀 
-		'DB_CHARSET'=> 'utf8', // 字符集
-		'DB_DEBUG'  =>  TRUE, // 数据库调试模式 开启后可以记录SQL日志
+	'LOAD_EXT_CONFIG' => 'database',	// 隐藏数据库配置
 
 );

@@ -50,6 +50,7 @@ class UserController extends Controller {
         $data['Confirmpassword'] = I('post.Confirmpassword');
         $data['phone'] = I('post.phone');
         $data['email'] = I('post.email');
+        $data['type'] = I('post.type');
 
         if($data['password'] != $data["Confirmpassword"]) {$this->error("Password and Confirmpassword are not equal");}
 
