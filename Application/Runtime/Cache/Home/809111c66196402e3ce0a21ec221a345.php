@@ -38,6 +38,17 @@ body{
 ._item{
     margin: 20px 0;
 }
+
+.cover{
+    width: 200px;
+    height: 200px !important;
+}
+
+.event{
+
+height: 500px;
+
+}
     /* .event{
 
         height: 200px;
@@ -61,6 +72,20 @@ body{
 
 .navbar{
     padding: 0 200px; 
+}
+
+@media screen and (max-width: 600px){
+
+.navbar{
+    padding: 0;
+}
+
+.search{
+    display: none;
+}
+.NarBar_brand{
+    display: none;
+}
 }
 
 .nav{
@@ -151,10 +176,8 @@ body{
 
                 <div class="search d7">
                         <form>
-                            <!-- <div> -->
                                 <input id="key_word" type="text" placeholder="Search Your Event...">
                                 <span id="_Search"></span>
-                            <!-- </div> -->
                         </form>
                         </div>
                 </div>
@@ -277,13 +300,12 @@ body{
 
         <?php if($has_event == 1 ): if(is_array($events)): $i = 0; $__LIST__ = $events;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?><div class="col-sm-6 col-md-3 event">
                         <div class="thumbnail">
-                        <img src="/SoaProject/Public/photo/<?php echo ($vo["show_cover"]); ?>" 
+                        <img class="cover" src="/SoaProject/Public/photo/<?php echo ($vo["show_cover"]); ?>" 
                             alt="通用的占位符缩略图">
                         <div class="caption">
-                            <h3></h3>
-                            <p><?php echo ($vo["show_name"]); ?></p>
+                            <h3><?php echo ($vo["show_name"]); ?></h3>
                             <p>
-                                <a href="<?php echo U('detail');?>" class="btn btn-primary" role="button">
+                                <a href="<?php echo U('detail');?>?id=s<?php echo ($vo["id"]); ?>" class="btn btn-primary" role="button">
                                     Show Detail
                                 </a> 
                             </p>
@@ -293,31 +315,6 @@ body{
                 <?php else: ?> 
               <h3 class="text-danger">Not Resualts ! </h3><?php endif; ?>
 
-
-        <div class="row _events">
-
-            <!-- <div class="col-sm-6 col-md-3 event">
-                <div class="thumbnail">
-                   <img src="/SoaProject/Public/photo/1.png" 
-                    alt="通用的占位符缩略图">
-                   <div class="caption">
-                       <h3>江小白“新大陆”</h3>
-                       <p>布瑞吉Bridge x K ELEVEN 巡演 广州站</p>
-                       <p>
-                           <a href="<?php echo U('detail');?>" class="btn btn-primary" role="button">
-                                show detail
-                           </a> 
-                           <a href="#" class="btn btn-default" role="button">
-                                book
-                           </a>
-                       </p>
-                   </div>
-                </div>
-           </div> -->
-
-        </div>
-    
-
      </div>
 
 </body>
@@ -325,52 +322,53 @@ body{
 <script>
 
     // ajax 
-    $(document).ready(function(){
+    // $(document).ready(function(){
 
-        // theurl = "<?php echo U('ViewItem/get_all_event');?>";
+    //     theurl = "<?php echo U('ViewItem/get_all_event');?>";
 
-        // get all the Event
-        $.post(
-            theurl,
-            function(res){
-                events = JSON.parse(res);
+    //     // get all the Event
+    //     $.post(
+    //         theurl,
+    //         function(res){
+    //             events = JSON.parse(res);
 
-                $.each(events, function(index, value){
-                    // event append 
-                    // console.log(value);
-                    jump_url = "<?php echo U('ViewItem/detail');?>"
-                    jump_url += "?id="+value.id+""
+    //             $.each(events, function(index, value){
+    //                 // event append 
+    //                 console.log(value);
+    //                 jump_url = "<?php echo U('ViewItem/detail');?>"
+    //                 jump_url += "?id="+value.id+""
 
-                    $("._events").append(
-                                         '<div class="col-sm-6 col-md-3 event">'
-                                    +    '<div class="thumbnail">'
-                                    +    '<img class="cover img-responsive" src="/SoaProject/Public/photo'+value.show_cover+'" alt="">'
-                                    +    '<div class="caption">'
-                                    +    '<h3>'+value.show_name+'</h3>'
-                                    +    '<p>'
-                                    +     _substring(value.show_detail, 20)
-                                    +    '</p>'
-                                    +    '<p>'
-                                    +    'Event   Date: '
-                                    +     value.show_time
-                                    +    '</p>'
-                                    +    '<p>'
-                                    +    '<a href="'+jump_url+'" class="btn btn-primary" role="button">'
-                                    +    'show detail'
-                                    +    '</a>'
-                                    +    ' '
-                                    +    '<a href="#" class="btn btn-success pull-right" role="button">'
-                                    +    'book'
-                                    +    '</a>'
-                                    +    '</p>'
-                                    +    '</div>'
-                                    +    '</div>'
-                                    +    '</div>'
-                                    )           
-                    })
-            }
-        )
-    })
+    //                 $("._events").append(
+    //                                      '<div class="col-sm-6 col-md-3 event">'
+    //                                 +    '<div class="thumbnail">'
+    //                                 +    '<img class="cover img-responsive" src="/SoaProject/Public/photo'+value.show_cover+'" alt="">'
+    //                                 +    '<div class="caption">'
+    //                                 +    '<h3>'+value.show_name+'</h3>'
+    //                                 +    '<p>'
+    //                                 +     _substring(value.show_detail, 20)
+    //                                 +    '</p>'
+    //                                 +    '<p>'
+    //                                 +    'Event   Date: '
+    //                                 +     value.show_time
+    //                                 +    '</p>'
+    //                                 +    '<p>'
+    //                                 +    '<a href="'+jump_url+'" class="btn btn-primary" role="button">'
+    //                                 +    'show detail'
+    //                                 +    '</a>'
+    //                                 +    ' '
+    //                                 +    '<a href="#" class="btn btn-success pull-right" role="button">'
+    //                                 +    'book'
+    //                                 +    '</a>'
+    //                                 +    '</p>'
+    //                                 +    '</div>'
+    //                                 +    '</div>'
+    //                                 +    '</div>'
+    //                                 )           
+    //                 })
+    //                 $(".progress").css('display','none');
+    //         }
+    //     )
+    // })
 
     
 
