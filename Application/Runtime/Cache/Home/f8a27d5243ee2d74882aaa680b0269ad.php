@@ -75,6 +75,9 @@ body{
 .search{
     display: none;
 }
+.NarBar_brand{
+    display: none;
+}
 }
 
 .nav{

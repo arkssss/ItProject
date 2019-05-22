@@ -224,11 +224,11 @@
     <div class="container my_login">
         <form class="form-horizontal" role="form">
                 <div class="form-group">
-                    <label for="firstname" class="control-label">UserName: </label>
+                    <label for="firstname" class="control-label">Username: </label>
                     <input type="text" class="form-control" id="firstname" name = "username">
                 </div>
                 <div class="form-group">
-                    <label for="lastname" class="control-label">PassWord: </label>
+                    <label for="lastname" class="control-label">Password: </label>
                     <input type="password" class="form-control" id="lastname" name = "password">
                 </div>
                 <div class="form-group">
@@ -305,15 +305,12 @@
                         // success 
                         // store into cookies
                         C_set_user_cookies(res['data']);
-                        layer.alert(res.msg, {skin: 'layui-layer-lan', title :'UOW BOOKING'},
-                            function(){
-                                //关闭登陆model
-                                self.location = "<?php echo U('ViewItem/index');?>"
-                            }
-                        );
-                        
+                        alert(res.msg)
+                        self.location = "<?php echo U('ViewItem/index');?>"
+
                     }else{
-                        layer.alert(res.msg, {skin: 'layui-layer-lan', title :'UOW BOOKING'})
+                        alert(res.msg)
+                        // layer.alert(res.msg, {skin: 'layui-layer-lan', title :'UOW BOOKING'})
                     }
                     $('#login_submit').removeAttr('disabled')
                 },

@@ -26,7 +26,7 @@ class UserController extends Controller {
 
             }else{  
                 $res['error'] = 1;
-                $res['msg'] = "Account dose not exist, Please try again!";
+                $res['msg'] = "Account does not exist, Please try again!";
             }
 
             // return  
