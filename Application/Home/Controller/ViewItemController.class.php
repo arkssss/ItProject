@@ -57,6 +57,85 @@ class ViewItemController extends Controller {
         $this->display();
     }
 
+    public function modify_order(){
+        
+
+        if(IS_POST){
+
+            $data = I('post.');
+
+            if($data['old_ticket'] == $data['ticket']){
+                echo json_encode(['error'=>1, 'msg'=>'No changes detected']);
+                return;
+            }
+
+            $map['ticket_price'] = $data['ticket'];
+            $map['show_id'] = $data['show_id'];
+
+            // ticket info
+            $this_ticket_info = M($this->show_ticket_model)->where($map)->find();
+
+            // capacity
+            if($this_ticket_info['ticket_number'] < 0){
+                echo json_encode(['error'=>1, 'msg'=>'This type of ticket is not available!']);
+                return;
+            }
+
+            $where['id'] = $data['record_id'];
+            $save_data['ticket_price'] = $data['ticket'];
+            $save_data['ticket_type']  = $this_ticket_info['ticket_name'];
+
+            M($this->show_book_record)->where($where)->save($save_data);
+
+
+            // ticket des1
+            M($this->show_ticket_model) ->where($map)->setDec('ticket_number', 1);
+
+            $map['ticket_price'] = $data['old_ticket'];
+            M($this->show_ticket_model) ->where($map)->setInc('ticket_number', 1);
+
+            echo json_encode(['error'=>0, 'msg'=>'Modify success!']);
+            return;
+
+        }else{
+
+            $event_id = intval(I("get.id"), 0);
+            if(!$event_id) {$this->error("Event does not exist!");}
+    
+            $record_id = intval(I("get.record_id"), 0);
+            if(!$record_id){$this->error("Recoed does not exist!");}
+    
+            // select
+            $this_event = M($this->show_modle)->where(['id'=>$event_id])->find();
+    
+            // echo $this->show_ticket_model;
+            // get tickets 
+            $this_tickets = M($this->show_ticket_model)->where(['show_id'=>$event_id])->select();
+    
+            // get my ticket_type
+            $book_record = M($this->show_book_record)->where(['id'=>$record_id])->find();
+    
+            $my_book_ticket =  $book_record['ticket_price'];
+            foreach ($this_tickets as $key => &$value) {
+                if($value['ticket_price'] == $my_book_ticket){
+                    $value['is_this'] = 1;
+                }else{
+                    $value['is_this'] = 0;
+                }
+            }
+    
+            // assign
+            $this->assign("event", $this_event);
+            $this->assign("tickets", $this_tickets);
+            $this->assign('book_record', $book_record);
+            
+    
+            $this->display();
+
+        }
+    
+
+    }
 
     // book the event   
     public function booking(){
@@ -64,7 +143,8 @@ class ViewItemController extends Controller {
         $ticket = I("post.ticket");
         $show_id = I("post.show_id");
         $user_id = intval(I("cookie.id"), 0);
-
+        $coupon = I("post.coupon");
+        
         if(!$user_id) {
 
             $json_ret['error'] = 1;
@@ -90,6 +170,13 @@ class ViewItemController extends Controller {
 
         $theevent = M($this->show_modle)->where(['id'=>$show_id])->find();
 
+        if($coupon && $theevent['coupon'] != $coupon){
+            // coupon not right
+            $json_ret['error'] = 1;
+            $json_ret['msg'] = "coupon code not right please check it again";
+            echo json_encode($json_ret);
+            return;
+        }
         // Saving booking info
         $data['show_id'] = $show_id;
         $data['ticket_price'] = $ticket;
@@ -100,6 +187,10 @@ class ViewItemController extends Controller {
         $data['show_name'] = $theevent['show_name'];
         // time
         $data['book_time'] = date("Y-m-d H:i:s",time());
+
+        // coupon
+        if(!$coupon){$data['has_coupon'] = 0;}
+        else{$data['has_coupon'] = 1;}
 
         $book_model = M($this->show_book_record);
         $book_model->startTrans();
@@ -147,6 +238,11 @@ class ViewItemController extends Controller {
                 // available event 
 
                 $show_date = $value['show_date'];
+                $value['record_id'] = $value['id'];
+
+                if($value['has_coupon']) $value['has_coupon'] = 'Yes';
+                else $value['has_coupon'] = 'No';
+
                 if($show_date < $curtDate){
                     //pass event
                     array_push($pass_event, $value);
@@ -164,6 +260,42 @@ class ViewItemController extends Controller {
         $this->display();
     }
 
+    // cancel a book
+    public function Cancel(){
+
+        // user id
+        $user_id = intval(I("cookie.id"), 0);
+        if(!$user_id) $this->error("Invaild User");
+
+        // show id
+        $show_id = intval(I('get.id'), 0);
+        
+        // record
+        $record_id = intval(I('get.record_id'), 0);
+        if(!$user_id || !$show_id) $this->error("record dose not exist !");
+
+
+        $map['show_id'] = $show_id;
+        $map['user_id'] = $user_id;
+        if($info = M($this->show_book_record)->where($map)->find()){
+
+            // delete record
+            M($this->show_book_record)->where(['id'=>$record_id])->delete();
+
+            $ticket['ticket_price'] = $info['ticket_price'];
+            $ticket['ticket_name'] = $info['ticket_type'];
+            $ticket['show_id'] = $show_id;
+
+            // capacity increase 1
+            M($this->show_ticket_model)->where($ticket)->setInc('ticket_number', 1);
+
+            $this->success("Cancel success!");
+        }else{
+
+            $this->error("You have not book this event, please check again!");
+        }
+
+    }
 
     public function my_publication(){
         // user id

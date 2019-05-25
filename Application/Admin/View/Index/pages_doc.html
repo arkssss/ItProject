@@ -71,11 +71,11 @@
                                   <td><font class="text-info">Under Review</font></td>
                               </if>
                               <if condition = "$vo.show_status eq 2">
-                                  <td><font class="text-danger">Not Approve</font></td>
+                                  <td><font class="text-danger">Not Approved</font></td>
                               </if>
                               <td>
                                   <a class="btn btn-primary m-r-5" href="{:U('Index/operate')}?id={$vo.id}&ope=1">Approve </a>
-                                  <a class="btn btn-danger m-r-5" href="{:U('Index/operate')}?id={$vo.id}&ope=2">Not Approve</a>
+                                  <a class="btn btn-danger m-r-5" href="{:U('Index/operate')}?id={$vo.id}&ope=2">Reject</a>
                               </td>
                             </tr>
                       </volist>

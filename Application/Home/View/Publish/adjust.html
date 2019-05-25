@@ -1,0 +1,227 @@
+<include file="Base/head" />
+
+<link href="__Home__/TimePick/css/rome.css" rel="stylesheet">
+
+
+<style>
+._from{
+    width: 60%;
+    margin: 50px auto;
+}
+#detail, #purchase{
+    height: 200px;
+}
+._price_tag{
+    width: 30%;
+}
+.cover_image{
+    width: 200px;
+    height: 300px;
+}
+body{
+    margin-top : 100px !important
+}
+
+
+</style>
+</head>
+<body>
+    <include file="Base/navbar" />
+    <h3 class="text-center">Adjust Your Event</h3>
+    <div class="container">
+
+        <form class="_from" role="form">
+                <input id="show_id" value="{$event.id}" style="display:none">
+                
+                <div class="form-group">
+                    <label for="name">Event Name: </label>
+                    <input type="text" value="{$event.show_name}" class="form-control" id="name" placeholder="please input your event name">
+                </div>
+
+                <div class="form-group">
+                        <label for='d'>Pick Your Event Date: </label>
+                        <br>
+                        <input id='d' old="{$event.show_time}" value="{$event.show_time}" class='input' />
+                </div>
+
+                <div class="form-group">
+                        <label for='d'>Pick Showtimes: </label>
+                        <br>
+                        <input id='t' old="{$event.show_times}" value="{$event.show_times}" class='input' />
+                </div>
+                
+                <div class="form-group">
+                        <label for="Address">Event Address: </label>
+                        <input type="text"  value="{$event.show_place}" class="form-control" id="Address" placeholder="please input your event addres"> 
+                </div>
+
+                <div class="form-group">
+                        <label for="tel">Event tel: </label>
+                        <input type="text" value="{$event.show_tel}" class="form-control" id="tel" placeholder="please input your tel">
+                </div>
+
+
+                <div class="form-group">
+                        <label for="coupon">coupon code: </label>
+                        <input type="text" readonly="readonly" class="form-control" id="coupon"  value="{$event.coupon}">
+                </div>
+
+                <div class="form-group _price">
+                        <label for="Ticket">Ticket Price: </label> 
+                        <!-- <div style="margin-top:20px" class="_price_tag panel panel-success">
+                                <div class="panel-heading text-center">
+                                        <h4>VIP Ticket</h4>
+                                </div>
+                                <div class="panel-body text-center">
+                                        <p>Ticket Price : $12</p>
+                                        <p>Ticket Numbers: 100</p>
+                                        <p>Ticket Detail : No</p>
+                                            
+                                    <span class="btn btn-info">Edit</span>
+                                    <span class="_ticket_remove btn btn-danger">Remove</span>
+                                </div>
+                        </div> -->
+
+                        <volist name="tickets" id='vo'>
+                            <div style="margin-top:20px" class="_price_tag panel panel-success">
+                                <div class="panel-heading">
+                                    <h4 class="ticket_name text-center" id="{$vo.id}" old="{$vo.ticket_name}">{$vo.ticket_name}</h4>
+                                </div>
+                                <div class="panel-body text-center">
+                                <label>Ticket Price  : $</label>
+                                <input class="ticket_price"  old="{$vo.ticket_price}" value="{$vo.ticket_price}">
+                                <label>Ticket Numbers: </label>
+                                <input class="ticket_number" old="{$vo.ticket_number}" value="{$vo.ticket_number}">
+                                <label>Ticket Detail : </label>
+                                <textarea old="{$vo.ticket_detail}" class="ticket_detail">{$vo.ticket_detail}</textarea>
+                                </div>
+                            </div>
+                        </volist>
+                        
+                        
+                </div>
+
+                <label for="cover_image">Cover Image: </label>
+                <div id="cover_image">
+                    <img class="cover_image" src="__PHOTO__/{$event.show_cover}" alt="Photo not found">
+                </div>
+
+
+
+                <div class="form-group">
+                        <label for="tel">Event Detail: </label>
+                        <textarea class="form-control" old="{$event.show_detail}" id="detail">{$event.show_detail}</textarea>
+                </div>
+
+                <div class="form-group">
+                        <label for="tel">purchase description: </label>
+                        <textarea class="form-control"  old="{$event.show_purchase_des}" id="purchase">{$event.show_purchase_des}</textarea>
+                </div>
+                </form>
+                <button id='_Submit' class="btn btn-default center-block">Submit</button>
+
+    </div>
+
+</body>
+
+<script type="text/javascript" src="__Home__/TimePick/js/rome.js"></script>
+<script type="text/javascript" src="__Home__/ImageUpload/upload.js"></script>
+<script>
+
+    $(document).ready(function(){   
+
+        // date pick up
+        rome(d, { time: false });  
+        
+        // time pick up
+        rome(t, { date: false }); 
+
+
+
+        //submit 
+        $("#_Submit").click(function(){
+            
+
+            var ticket_prices = $("._price_tag")
+            var length = ticket_prices.length
+            var tickets = {}
+            var lowest_price ;
+            // add tickets
+            for(var i=0; i<length;i++){
+                
+                var Elem = ticket_prices[i]
+                var panel_heading = $(Elem).children(".panel-heading")
+                var panel_body = $(Elem).children(".panel-body")
+                tickets[i] = { 
+                    'id'   :   $(panel_heading).children(".ticket_name").attr('id'),    
+                    'name' :   $(panel_heading).children(".ticket_name").text(),
+                    'price':   $(panel_body).children(".ticket_price").val(),
+                    'number' : $(panel_body).children(".ticket_number").val(),
+                    'detail' : $(panel_body).children(".ticket_detail").val(),
+                } 
+
+                if(!parseInt(tickets[i]['number']) || !parseInt(tickets[i]['price']) || parseInt(tickets[i]['price']) <= 0 || parseInt(tickets[i]['number']) <= 0){
+                    alert("Make sure the ticket price and capacity lager then 0");
+                    return;
+                }
+
+                if(!i) {
+                    lowest_price = parseInt(tickets[i]['price']) 
+                    continue;
+                } 
+                if(lowest_price > parseInt(tickets[i]['price'])) lowest_price = parseInt(tickets[i]['price'])
+                
+                
+                
+            }
+
+            data = {
+                'id'    : $("#show_id").val(),
+                'show_name' : $('#name').val(),
+                'show_tel': $("#tel").val(),
+                'show_time' : $("#d").val(),
+                'show_times': $("#t").val(),
+                'show_place': $("#Address").val(),
+                'show_detail' : $("#detail").val(),
+                'show_purchase_des' : $("#purchase").val(),
+                'show_tickets' : tickets,
+                'show_lowest_price' : lowest_price,
+            }
+
+
+            // console.log(data);
+
+
+            //validate code if have time
+            if(!data['show_name'] || !data['show_time'] || !data['show_times'] || !data['show_place'] || !data['show_tel'] || !data['show_detail'] || !data['show_purchase_des']){
+                alert("Please Fill All The Infomation!")
+                return;
+            }
+
+
+
+            var theurl = "{:U('Publish/adjust')}"
+            $.post(
+                theurl,
+                data,
+                function(res){
+                    res = JSON.parse(res)
+                    // console.log(res)
+                    if(!res.error){
+                        // success
+                        location.href = "{:U('ViewItem/my_publication')}"
+                    }
+                    alert(res.msg);
+                    
+                }
+
+            )
+
+        })  
+    })
+
+
+
+</script>
+
+</html>

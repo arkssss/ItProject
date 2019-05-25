@@ -47,6 +47,20 @@
     padding: 0 200px; 
 }
 
+@media screen and (max-width: 600px){
+
+.navbar{
+    padding: 0;
+}
+
+.search{
+    display: none;
+}
+.NarBar_brand{
+    display: none;
+}
+}
+
 .nav{
     width: 80%;
 }
@@ -135,10 +149,8 @@
 
                 <div class="search d7">
                         <form>
-                            <!-- <div> -->
                                 <input id="key_word" type="text" placeholder="Search Your Event...">
                                 <span id="_Search"></span>
-                            <!-- </div> -->
                         </form>
                         </div>
                 </div>
@@ -232,6 +244,11 @@
                 <div class="form-group">
                         <label for="tel">Event tel: </label>
                         <input type="text" class="form-control" id="tel" placeholder="please input your tel">
+                </div>
+                
+                <div class="form-group">
+                        <label for="coupon">coupon code: </label>
+                        <input type="text" class="form-control" id="coupon" placeholder="please input your coupon code">
                 </div>
 
                 <div class="form-group _price">
@@ -458,7 +475,7 @@
                     continue;
                 } 
                 if(lowest_price > parseInt(tickets[i]['price'])) lowest_price = parseInt(tickets[i]['price'])
-                
+
             }
 
             data = {
@@ -472,10 +489,15 @@
                 'show_purchase_des' : $("#purchase").val(),
                 'show_tickets' : tickets,
                 'show_lowest_price' : lowest_price,
+                'coupon' : $('#coupon').val(),
             }
 
-
+           
             // validate code if have time
+            if(!data['coupon'] || !data['show_name'] || !data['show_time'] || !data['show_times'] || !data['show_place'] || !data['show_tel'] || !data['show_cover'] || !data['show_detail'] || !data['show_purchase_des']){
+                alert("Please Fill All The Infomation!")
+                return;
+            }
 
             var theurl = "<?php echo U('Publish/index');?>"
             $.post(
@@ -486,6 +508,7 @@
                     // console.log(res)
                     if(!res.error){
                         // success
+                        location.href = "<?php echo U('ViewItem/index');?>"
                     }
                     alert(res.msg);
                     

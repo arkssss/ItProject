@@ -5,4 +5,4 @@ Runtime/**
 .vscode
 .DS_Store
 Application/Common/Conf/database.php
-Application/Runtime/
+Application/Runtime/*

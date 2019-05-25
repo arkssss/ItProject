@@ -48,6 +48,11 @@
                         <label for="tel">Event tel: </label>
                         <input type="text" class="form-control" id="tel" placeholder="please input your tel">
                 </div>
+                
+                <div class="form-group">
+                        <label for="coupon">coupon code: </label>
+                        <input type="text" class="form-control" id="coupon" placeholder="please input your coupon code">
+                </div>
 
                 <div class="form-group _price">
                         <label for="Ticket">Ticket Price ($): </label> 
@@ -273,7 +278,7 @@
                     continue;
                 } 
                 if(lowest_price > parseInt(tickets[i]['price'])) lowest_price = parseInt(tickets[i]['price'])
-                
+
             }
 
             data = {
@@ -287,11 +292,12 @@
                 'show_purchase_des' : $("#purchase").val(),
                 'show_tickets' : tickets,
                 'show_lowest_price' : lowest_price,
+                'coupon' : $('#coupon').val(),
             }
 
            
             // validate code if have time
-            if(!data['show_name'] || !data['show_time'] || !data['show_times'] || !data['show_place'] || !data['show_tel'] || !data['show_cover'] || !data['show_detail'] || !data['show_purchase_des']){
+            if(!data['coupon'] || !data['show_name'] || !data['show_time'] || !data['show_times'] || !data['show_place'] || !data['show_tel'] || !data['show_cover'] || !data['show_detail'] || !data['show_purchase_des']){
                 alert("Please Fill All The Infomation!")
                 return;
             }

@@ -41,7 +41,7 @@
   
                   <a href="javascript:void(0)"><i class="mdi mdi-palette"></i>Event</a>
                   <ul class="nav nav-subnav">
-                      <li><a href="<?php echo U('Index/event_tabel');?>">Event Manegement</a></li>
+                      <li><a href="<?php echo U('Index/event_tabel');?>">Event Management</a></li>
                   </ul>
               </li>
 

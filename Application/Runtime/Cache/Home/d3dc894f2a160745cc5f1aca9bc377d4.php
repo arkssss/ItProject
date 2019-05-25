@@ -40,6 +40,10 @@ body{
     width: 200px;
     height: 300px;
 }
+._btn_group{
+        width: 60%;
+        margin: 0 auto;
+}
 
 </style>
 
@@ -50,6 +54,20 @@ body{
 
 .navbar{
     padding: 0 200px; 
+}
+
+@media screen and (max-width: 600px){
+
+.navbar{
+    padding: 0;
+}
+
+.search{
+    display: none;
+}
+.NarBar_brand{
+    display: none;
+}
 }
 
 .nav{
@@ -140,10 +158,8 @@ body{
 
                 <div class="search d7">
                         <form>
-                            <!-- <div> -->
                                 <input id="key_word" type="text" placeholder="Search Your Event...">
                                 <span id="_Search"></span>
-                            <!-- </div> -->
                         </form>
                         </div>
                 </div>
@@ -223,11 +239,18 @@ body{
                                                 <img class="center-block _cover img-rounded" src="/SoaProject/Public/photo/<?php echo ($vo["show_cover"]); ?>" alt="">
                                                 <!-- <p style="margin-top:10px" class="text-center">Publish Date: <span class="text-danger"><?php echo ($vo["show-"]); ?></span></p> -->
                                                 <p style="margin-top:10px" class="text-center">Event Date: <span class="text-danger"><?php echo ($vo["show_time"]); ?></span></p>
-                                                <p  style="margin-top:10px" class="text-center">
-                                                <a href="<?php echo U('ViewItem/detail');?>?id=<?php echo ($vo["id"]); ?>" class="text-center btn btn-success" role="button">
-                                                Detail
-                                                </a> 
-                                                </p>
+                                                <div class="_btn_group">
+                                                        <p style="margin-top:10px;" class="pull-left">
+                                                                <a href="<?php echo U('ViewItem/detail');?>?id=<?php echo ($vo["id"]); ?>" class="text-center btn btn-success" role="button">
+                                                                Detail
+                                                                </a> 
+                                                        </p>
+                                                        <p  style="margin-top:10px" class="pull-right">
+                                                                <a href="<?php echo U('Publish/adjust');?>?id=<?php echo ($vo["id"]); ?>" class="text-center btn btn-info" role="button">
+                                                                Adjust
+                                                                </a> 
+                                                        </p>
+                                                </div>
                                         </div>
                                 </div>
                         </div><?php endforeach; endif; else: echo "" ;endif; ?>
@@ -248,6 +271,11 @@ body{
                                         <img class="center-block _cover img-rounded" src="/SoaProject/Public/photo/<?php echo ($vo["show_cover"]); ?>" alt="">
                                         <!-- <p style="margin-top:10px" class="text-center">Publish Date: <span class="text-danger"><?php echo ($vo["show-"]); ?></span></p> -->
                                         <p style="margin-top:10px" class="text-center">Event Date: <span class="text-danger"><?php echo ($vo["show_time"]); ?></span></p>
+                                        <p  style="margin-top:10px" class="pull-right">
+                                                <a href="<?php echo U('Publish/adjust');?>?id=<?php echo ($vo["id"]); ?>" class="text-center btn btn-info" role="button">
+                                                Adjust
+                                                </a> 
+                                        </p>
                                 </div>
                         </div>
                         </div><?php endforeach; endif; else: echo "" ;endif; ?>
@@ -298,37 +326,5 @@ body{
 
     </div>
 
-    <style type="text/css"> 
-    ._foot{
-        /* margin-top: 30px; */
-        background-color:black;
-        padding: 10px 0px;
-        min-height: 80px;
-        color: white !important;
-        /* position: absolute; */
-        /* bottom: 0; */
-        width: 100%; 
-        left: 0;
-        /* overflow:hidden; */
-    }
-    ._foot p{
-        font-family: "Helvetica Neue",Helvetica,Arial,sans-serif !important;
-        font-size: 14px !important;
-        line-height: 1.42857143 !important;
-        margin: 0 0 10px;
-        width: 100%;
-    }
-</style>
-
-<div class="_foot">
-    <div class="row">
-        <p class="col-xs-12 col-lg-12 col-sm-12 text-center">CopyRight 2019 ©</p>
-        <p class="text-info col-xs-12 col-lg-12 col-sm-12 text-center">ZhouFang & James & Sachin & Xiang</p>
-    </div>
-</div>
-
-<!-- <script>
-    $("._foot").css("button", 0);
-</script> -->
     </body>
 </html>

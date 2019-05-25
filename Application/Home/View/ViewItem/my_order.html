@@ -26,7 +26,7 @@
 
         <volist name="coming_event" id="vo">
 
-                <div class="col-lg-3">
+                <div class="col-lg-4">
                         <div class="panel panel-success">
                                 <div class="panel-heading">
                                         <h3 class="text-center panel-title">{$vo.show_name}</h3>
@@ -35,10 +35,16 @@
                                         <img class="center-block _cover img-rounded" src="__PHOTO__/{$vo.show_cover}" alt="">
                                         <p style="margin-top:10px" class="text-center">Event Date: <span class="text-danger">{$vo.show_date}</span></p>
                                         <p style="margin-top:10px" class="text-center">Ticket Type: <span class="text-danger">{$vo.ticket_type}</span></p>
+                                        <p style="margin-top:10px" class="text-center">Has Discount: <span class="text-danger">{$vo.has_coupon}</span></p>
                                         <p  style="margin-top:10px" class="text-center">
-                                        <a href="{:U('ViewItem/detail')}?id={$vo.show_id}" class="btn btn-success" role="button">
-                                            Detail
+                                        <a href="{:U('ViewItem/modify_order')}?id={$vo.show_id}&record_id={$vo.record_id}" class="btn btn-success" role="button">
+                                                        Modify
                                         </a> 
+                                        </p>
+                                        <p  style="margin-top:10px" class="text-center">
+                                                <a href="{:U('ViewItem/Cancel')}?id={$vo.show_id}&record_id={$vo.record_id}" class="btn btn-danger" role="button">
+                                                        Cancel
+                                                </a> 
                                         </p>
                                 </div>
                         </div>
@@ -73,7 +79,7 @@
 
             <volist name="pass_event" id="vo">
 
-                    <div class="col-lg-3">
+                    <div class="col-lg-4">
                             <div class="panel panel-default">
                                     <div class="panel-heading">
                                             <h3 class="text-center panel-title">{$vo.show_name}</h3>

@@ -19,7 +19,7 @@ class PublishController extends Controller {
                 return;
             };
 
-            //  Save if Post
+            //  save if Post
             $data = I("post.");
             $data['show_owner'] = $user_id;
 
@@ -80,6 +80,67 @@ class PublishController extends Controller {
 
     }
 
+    // edit the event
+    public function adjust(){
+
+        if(IS_POST){
+            // save
+
+            $user_id = intval(I("cookie.id"), 0);
+            $data = I('post.');
+            
+
+            $tickets = $data['show_tickets'];
+            unset($data['show_tickets']);
+
+
+            M($this->show_model)->where(['id'=>$data['id']]) -> save($data);
+
+
+            //save 
+            foreach ($tickets as $key => $value) {
+
+                $ticket_data['ticket_price'] = $value['price'];
+                $ticket_data['ticket_name'] =  $value['name'];
+                $ticket_data['ticket_detail']  =$value['detail'];
+                $ticket_data['ticket_number'] = $value['number'];
+
+                $map['id'] = $value['id'];
+                M($this->show_price_model)-> where($map) -> save($ticket_data);
+            
+            }
+
+
+
+            $ret['error'] = 0;
+            $ret['msg'] = 'Adjust Success!';
+
+            echo json_encode($ret);
+            return;
+
+
+        }else {
+
+            $user_id = intval(I("cookie.id"), 0);
+
+            $show_id = intval(I("get.id"), 0);
+            if(!$show_id) {$this->error("Event dose not exist");}
+
+            $show_info = M($this->show_model)->where(['id'=>$show_id,'show_owner'=>$user_id])->find();
+            if(!$show_info) {$this->error("Event dose not exist");}
+
+            $ticket_info = M($this->show_price_model)->where(['show_id'=>$show_id])->select();
+
+            // var_dump($show_info);
+            //assign
+            $this->assign("event", $show_info);
+            $this->assign("tickets", $ticket_info);
+
+            $this->display();
+            
+        }
+
+    }
 
     // upload image 
     public function upload(){

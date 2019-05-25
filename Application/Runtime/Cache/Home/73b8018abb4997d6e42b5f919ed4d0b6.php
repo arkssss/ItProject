@@ -251,11 +251,19 @@ body{
                         </p>
                         <hr>    
                         <h4 class="text-info">Booking Now</h4>
-                        <p>
-                            <span href="#" class="btn btn-success _Booking" role="button">
-                                Booking
-                            </span> 
-                        </p>
+
+                        <form role="form">
+                            <div class="form-group">
+                                    <label for="name">Coupon: </label>
+                                    <input type="text" class="form-control" id="Coupon" placeholder="input your coupon code if you have">
+                            </div>
+                            <p>
+                                    <span href="#" class="btn btn-success _Booking" role="button">
+                                        Booking
+                                    </span> 
+                                </p>
+                        </form>
+
                 </div>
         </div>
 </div>
@@ -356,6 +364,7 @@ body{
                 {
                     'show_id' : show_id,
                     'ticket'  : curtTicket,
+                    'coupon'  : $("#Coupon").val()
                 },
                 function(res){
                     res = JSON.parse(res)

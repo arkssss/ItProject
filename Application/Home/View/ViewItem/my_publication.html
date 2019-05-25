@@ -15,6 +15,10 @@ body{
     width: 200px;
     height: 300px;
 }
+._btn_group{
+        width: 60%;
+        margin: 0 auto;
+}
 
 </style>
 
@@ -40,11 +44,18 @@ body{
                                                 <img class="center-block _cover img-rounded" src="__PHOTO__/{$vo.show_cover}" alt="">
                                                 <!-- <p style="margin-top:10px" class="text-center">Publish Date: <span class="text-danger">{$vo.show-}</span></p> -->
                                                 <p style="margin-top:10px" class="text-center">Event Date: <span class="text-danger">{$vo.show_time}</span></p>
-                                                <p  style="margin-top:10px" class="text-center">
-                                                <a href="{:U('ViewItem/detail')}?id={$vo.id}" class="text-center btn btn-success" role="button">
-                                                Detail
-                                                </a> 
-                                                </p>
+                                                <div class="_btn_group">
+                                                        <p style="margin-top:10px;" class="pull-left">
+                                                                <a href="{:U('ViewItem/detail')}?id={$vo.id}" class="text-center btn btn-success" role="button">
+                                                                Detail
+                                                                </a> 
+                                                        </p>
+                                                        <p  style="margin-top:10px" class="pull-right">
+                                                                <a href="{:U('Publish/adjust')}?id={$vo.id}" class="text-center btn btn-info" role="button">
+                                                                Adjust
+                                                                </a> 
+                                                        </p>
+                                                </div>
                                         </div>
                                 </div>
                         </div>
@@ -70,6 +81,11 @@ body{
                                         <img class="center-block _cover img-rounded" src="__PHOTO__/{$vo.show_cover}" alt="">
                                         <!-- <p style="margin-top:10px" class="text-center">Publish Date: <span class="text-danger">{$vo.show-}</span></p> -->
                                         <p style="margin-top:10px" class="text-center">Event Date: <span class="text-danger">{$vo.show_time}</span></p>
+                                        <p  style="margin-top:10px" class="pull-right">
+                                                <a href="{:U('Publish/adjust')}?id={$vo.id}" class="text-center btn btn-info" role="button">
+                                                Adjust
+                                                </a> 
+                                        </p>
                                 </div>
                         </div>
                         </div>

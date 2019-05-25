@@ -47,6 +47,20 @@
     padding: 0 200px; 
 }
 
+@media screen and (max-width: 600px){
+
+.navbar{
+    padding: 0;
+}
+
+.search{
+    display: none;
+}
+.NarBar_brand{
+    display: none;
+}
+}
+
 .nav{
     width: 80%;
 }
@@ -135,10 +149,8 @@
 
                 <div class="search d7">
                         <form>
-                            <!-- <div> -->
                                 <input id="key_word" type="text" placeholder="Search Your Event...">
                                 <span id="_Search"></span>
-                            <!-- </div> -->
                         </form>
                         </div>
                 </div>
@@ -209,7 +221,7 @@
     <hr>
     <div class="row">
 
-        <?php if(is_array($coming_event)): $i = 0; $__LIST__ = $coming_event;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?><div class="col-lg-3">
+        <?php if(is_array($coming_event)): $i = 0; $__LIST__ = $coming_event;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?><div class="col-lg-4">
                         <div class="panel panel-success">
                                 <div class="panel-heading">
                                         <h3 class="text-center panel-title"><?php echo ($vo["show_name"]); ?></h3>
@@ -218,10 +230,16 @@
                                         <img class="center-block _cover img-rounded" src="/SoaProject/Public/photo/<?php echo ($vo["show_cover"]); ?>" alt="">
                                         <p style="margin-top:10px" class="text-center">Event Date: <span class="text-danger"><?php echo ($vo["show_date"]); ?></span></p>
                                         <p style="margin-top:10px" class="text-center">Ticket Type: <span class="text-danger"><?php echo ($vo["ticket_type"]); ?></span></p>
+                                        <p style="margin-top:10px" class="text-center">Has Discount: <span class="text-danger"><?php echo ($vo["has_coupon"]); ?></span></p>
                                         <p  style="margin-top:10px" class="text-center">
-                                        <a href="<?php echo U('ViewItem/detail');?>?id=<?php echo ($vo["show_id"]); ?>" class="btn btn-success" role="button">
-                                            Detail
+                                        <a href="<?php echo U('ViewItem/modify_order');?>?id=<?php echo ($vo["show_id"]); ?>&record_id=<?php echo ($vo["record_id"]); ?>" class="btn btn-success" role="button">
+                                                        Modify
                                         </a> 
+                                        </p>
+                                        <p  style="margin-top:10px" class="text-center">
+                                                <a href="<?php echo U('ViewItem/Cancel');?>?id=<?php echo ($vo["show_id"]); ?>&record_id=<?php echo ($vo["record_id"]); ?>" class="btn btn-danger" role="button">
+                                                        Cancel
+                                                </a> 
                                         </p>
                                 </div>
                         </div>
@@ -251,7 +269,7 @@
     <hr>
     <div class="row">
 
-            <?php if(is_array($pass_event)): $i = 0; $__LIST__ = $pass_event;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?><div class="col-lg-3">
+            <?php if(is_array($pass_event)): $i = 0; $__LIST__ = $pass_event;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?><div class="col-lg-4">
                             <div class="panel panel-default">
                                     <div class="panel-heading">
                                             <h3 class="text-center panel-title"><?php echo ($vo["show_name"]); ?></h3>

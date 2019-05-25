@@ -38,39 +38,58 @@ body{
                         <hr>    
                         <h4 class="text-info">Tickets Information</h4>
                         <p class="_price_tags">
-                            <volist name="tickets" id="vo">
-                                <span style="margin-right:10px" class='btn btn-default _ticket' type="{$vo.ticket_name}" role="button">{$vo.ticket_price}</span>
+                            <volist name="tickets" id="vo"> 
+                                <if condition ="$vo.is_this eq 1" >
+                                        <span style="margin-right:10px" class='btn btn-default curtTicket btn-success _ticket' type="{$vo.ticket_name}" role="button">{$vo.ticket_price}</span>
+                                        <else />
+                                        <span style="margin-right:10px" class='btn btn-default _ticket' type="{$vo.ticket_name}" role="button">{$vo.ticket_price}</span>
+                                </if>
                             </volist>
+
+
                             <volist name="tickets" id="vo">
-                            <div style="margin-top:10px; display: none" class="panel panel-success _ticket_div" id="{$vo.ticket_name}">
-                                    <div class="panel-heading">
-                                        <h3 class="panel-title">
-                                            {$vo.ticket_name}
-                                        </h3>
-                                    </div>
-                                    <div class="panel-body">
-                                            <p>Remaining Tickets:  {$vo.ticket_number}</p>
-                                            <p>Ticket detail: {$vo.ticket_detail}</p>
-                                    </div>
-                                </div>
+                                    <if condition ="$vo.is_this eq 1" >
+
+
+                                            <div style="margin-top:10px;" class="panel panel-success _ticket_div {$vo.is_this}" id="{$vo.ticket_name}">
+                                                    <div class="panel-heading">
+                                                        <h3 class="panel-title">
+                                                            {$vo.ticket_name}
+                                                        </h3>
+                                                    </div>
+                                                    <div class="panel-body">
+                                                            <p>Remaining Tickets:  {$vo.ticket_number}</p>
+                                                            <p>Ticket detail: {$vo.ticket_detail}</p>
+                                                    </div>
+                                            </div>
+
+                                            <else />
+
+                                            <div style="margin-top:10px; display: none" class="panel panel-success _ticket_div {$vo.is_this}" id="{$vo.ticket_name}">
+                                                    <div class="panel-heading">
+                                                        <h3 class="panel-title">
+                                                            {$vo.ticket_name}
+                                                        </h3>
+                                                    </div>
+                                                    <div class="panel-body">
+                                                            <p>Remaining Tickets:  {$vo.ticket_number}</p>
+                                                            <p>Ticket detail: {$vo.ticket_detail}</p>
+                                                    </div>
+                                            </div>
+
+                                    </if>
+
+
                             </volist>
 
                         </p>
                         <hr>    
-                        <h4 class="text-info">Booking Now</h4>
-
-                        <form role="form">
-                            <div class="form-group">
-                                    <label for="name">Coupon: </label>
-                                    <input type="text" class="form-control" id="Coupon" placeholder="input your coupon code if you have">
-                            </div>
-                            <p>
-                                    <span href="#" class="btn btn-success _Booking" role="button">
-                                        Booking
-                                    </span> 
-                                </p>
-                        </form>
-
+                        <h4 class="text-info">Modify Ticket</h4>
+                        <p>
+                            <span href="#" class="btn btn-success _Booking" role="button">
+                                confirm
+                            </span> 
+                        </p>
                 </div>
         </div>
 </div>
@@ -134,17 +153,19 @@ body{
             }
             var show_id = $("#show_id").text();
 
-            var theurl = "{:U('ViewItem/booking')}"
+            var theurl = "{:U('ViewItem/modify_order')}"
+
             $.post(
                 theurl,
-                {
-                    'show_id' : show_id,
-                    'ticket'  : curtTicket,
-                    'coupon'  : $("#Coupon").val()
+                {   
+                    'record_id' : "{$book_record.id}",
+                    'show_id'   : show_id,
+                    'ticket'    : curtTicket,
+                    'old_ticket': "{$book_record.ticket_price}",
                 },
                 function(res){
                     res = JSON.parse(res)
-                    if(res.error){
+                    if(!res.error){
                         // success
                         layer.alert(res.msg, {skin: 'layui-layer-lan', title :'UOW BOOKING'},
                         function(){
