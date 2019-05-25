@@ -14,7 +14,13 @@ class IndexController extends Controller {
         if(!$user_id || $user_type!='3'){
             $this->display('LogIn/index');
         }else{
+
+            $total_user = M($this->user_model)->count();
+            $total_events = M($this->show_model)->count();
             $user_info = M($this->user_model)->where(['id'=>$user_id])->find();
+
+            $this->assign("total_user", $total_user);
+            $this->assign("total_events", $total_events);
             $this->assign("user", $user_info);
             $this->display(); 
         }
