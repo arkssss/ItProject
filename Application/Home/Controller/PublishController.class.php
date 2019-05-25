@@ -6,6 +6,7 @@ class PublishController extends Controller {
 
     protected $show_model = "show";
     protected $show_price_model = "show_ticket";
+    protected $show_record_model = "book_record";
 
     public function index(){
 
@@ -94,7 +95,7 @@ class PublishController extends Controller {
             unset($data['show_tickets']);
 
 
-            M($this->show_model)->where(['id'=>$data['id']]) -> save($data);
+            M($this->show_model)->where(['id'=>$data['id']]) ->save($data);
 
 
             //save 
@@ -111,6 +112,9 @@ class PublishController extends Controller {
             }
 
 
+            $record_save['show_date'] = $data['show_time'];
+            $record_save['show_name'] = $data['show_name'];
+            M($this->show_record_model)->where(['show_id'=>$data['id']])->save($record_save);
 
             $ret['error'] = 0;
             $ret['msg'] = 'Adjust Success!';
