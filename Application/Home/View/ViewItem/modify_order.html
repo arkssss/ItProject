@@ -99,7 +99,7 @@ body{
 <hr>    
 <ul id="myTab" class="nav nav-tabs">
     <li class="active">
-        <a href="#home" data-toggle="tab">Event's Detial</a>
+        <a href="#home" data-toggle="tab">Event's Detail</a>
     </li>
     <li><a href="#ios" data-toggle="tab">Purchase Description</a></li>
 </ul>
@@ -167,15 +167,11 @@ body{
                     res = JSON.parse(res)
                     if(!res.error){
                         // success
-                        layer.alert(res.msg, {skin: 'layui-layer-lan', title :'UOW BOOKING'},
-                        function(){
-                                //关闭登陆model
-                                location.reload();
-                            }
-                        );
+                        alert(res.msg);
+                        location.reload();
                     }else{
                         // error
-                        layer.alert(res.msg, {skin: 'layui-layer-lan', title :'UOW BOOKING'})
+                        alert(res.msg);
                     }
                     $("._Booking").removeAttr('disabled')
                 }
