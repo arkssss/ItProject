@@ -55,7 +55,7 @@ class PublishController extends Controller {
                 if($add_tag){
                     $show_model->commit();
                     $res['error'] = 0;
-                    $msg = "publich success!";
+                    $msg = "Publication success!";
                 }else{
 
                     $res['error'] = 1;
